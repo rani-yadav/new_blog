@@ -25,22 +25,26 @@ RSpec.describe PostsController, type: :controller do
     it "create a new post when invalid attribute" do
      @post = Post.create(title: "", body: "")
      @post.save 
-     expect(response).to have content("invalid attributes")
+     expect(response).to raise_error("invalid attributes")
     end 
   end 
 
   describe "GET #show" do
     it "responds to GET" do
-      get :show, :@post.id => "postid"
+      get :show, id: :@post.id 
       expect(response).to redirect_to(post_path)
     end
   end
 
-  describe "DELETE #destroy post" do
-    it "delete the post" do
-     @post = Post.create(title: "rails", body: "rails is a web development framework")
-     @post.destroy
-     expect(response).to redirect_to(posts_path)
+  describe "DELETE #destroy post" do 
+    it "deletes the post" do
+      expect{ 
+        delete :destroy, id: :@post, post: {title: "@post.title", body: "@post.body"}
+     }.to change(Post, :count).by(-1)
     end 
-  end	
+
+    it "successfull destroyed the post"do
+    expect(response).to redirect_to(posts_path)
+  	end	
+	end
 end
