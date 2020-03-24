@@ -16,16 +16,7 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  describe "#create" do
-  	byebug
-    @post = Post.create(title: "ror", body: "ruby on rails") 
-    @post.save
-    it "redirect_to @post" do
-      expect(:post).to redirect_to(post_url(assigns(:post)))
-    end
-  end
-
-  describe "POST #create post" do
+   describe "POST #create post" do
     it "create a new post when valid attribute" do
      @post = Post.create(title: "ror", body: "ruby on rails")
      @post.save
