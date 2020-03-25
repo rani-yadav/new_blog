@@ -31,6 +31,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #show" do
     it "responds to GET" do
+    	assign(:@post)
       get :show, id: :@post.id 
       expect(response).to redirect_to(post_path)
     end
